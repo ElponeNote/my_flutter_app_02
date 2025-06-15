@@ -1,0 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Git convention defining branch naming, commit message format, and issue labeling based on GitFlow and Conventional Commits.
+git-convention.mdc
