@@ -112,7 +112,6 @@ class ProfileTab extends StatelessWidget {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () {},
-                        child: const Text('프로필 편집'),
                         style: OutlinedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: screenWidth * 0.03),
                           textStyle: TextStyle(fontSize: screenWidth * 0.04, color: Colors.white),
@@ -120,6 +119,7 @@ class ProfileTab extends StatelessWidget {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           side: BorderSide(color: Colors.white24),
                         ),
+                        child: const Text('프로필 편집'),
                       ),
                     ),
                     SizedBox(width: 10),

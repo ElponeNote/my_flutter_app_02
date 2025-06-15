@@ -50,3 +50,49 @@
 - 실제 게시물 작성, 계정 추가/전환, Drawer 메뉴 기능 등 세부 구현 필요
 - 추가 UI/UX 개선 및 기능 확장 가능
 
+## iOS 및 Android 개발 환경 문제 해결 및 실행 기록
+
+### 1. iOS: 개발자 인증서 신뢰 문제 해결
+- **문제:**
+  - 앱 실행 시 "신뢰하지 않는 개발자" 오류 발생
+  - Xcode/Flutter에서 빌드 및 설치는 되지만, 아이폰에서 앱 실행이 차단됨
+- **해결 방법:**
+  1. 아이폰에서 `설정 > 일반 > VPN 및 기기 관리`로 이동
+  2. `Apple Development: winterboy21@hotmail.co.kr (9QVTNJ57PG)` 또는 `Developer App` 항목을 찾아 터치
+  3. "신뢰(Trust)" 버튼을 눌러 신뢰 허용
+  4. 필요시 앱 삭제 후 재설치
+  5. 문제 지속 시 Xcode에서 직접 `Product > Run` 실행
+
+### 2. Android Studio: Gradle Sync 메뉴가 보이지 않을 때
+- **문제:**
+  - `File > Sync Project with Gradle Files` 메뉴가 보이지 않음
+- **해결 방법:**
+  1. 상단 툴바의 코끼리(Sync) 아이콘 클릭
+  2. Gradle 패널의 새로고침(⟳) 아이콘 클릭
+  3. `Command + Shift + A`로 "Sync Project with Gradle Files" 검색 후 실행
+  4. `File > Invalidate Caches / Restart...`로 강제 새로고침
+  5. 터미널에서 `./gradlew --refresh-dependencies` 실행
+
+### 3. Xcode 빌드 오류: build/ios/iphoneos 폴더 삭제 불가
+- **문제:**
+  - `Could not delete .../build/ios/iphoneos because it was not created by the build system ...`
+- **해결 방법:**
+  1. 터미널에서 `rm -rf /Volumes/1TB/my_flutter_app_02new/build/ios/iphoneos`로 직접 삭제
+  2. `flutter clean` 실행
+  3. 필요시 `rm -rf ~/Library/Developer/Xcode/DerivedData`로 Xcode 임시 데이터 삭제
+  4. 다시 빌드 및 실행
+
+### 4. 기타 참고 사항
+- iOS 앱을 실기기에서 실행할 때는 반드시 개발자 인증서를 신뢰해야 함
+- Android/Flutter 빌드 오류 발생 시 `flutter clean`과 캐시 삭제가 효과적임
+- Xcode/Flutter 빌드 후 앱이 자동 실행되지 않으면 Xcode에서 직접 실행 시도
+
+---
+
+## 현재 상태
+- **iPhone 15 Pro Max 시뮬레이터**와 **실제기기 iPhone CSRyoo(mobile)**에서 앱이 정상적으로 실행되고 있음
+
+---
+
+> 다음 작업 진행 시, 위의 문제 해결 과정을 반드시 참고할 것!
+
