@@ -96,3 +96,82 @@
 
 > 다음 작업 진행 시, 위의 문제 해결 과정을 반드시 참고할 것!
 
+---
+
+## [2024-06] Firebase 연동 및 구글 로그인 구현 상세 작업 내역
+
+### 1. Firebase CLI 및 FlutterFire CLI 설치
+```sh
+npm install -g firebase-tools
+dart pub global activate flutterfire_cli
+```
+
+### 2. Firebase 프로젝트 연동 및 초기화
+```sh
+firebase login
+firebase init
+```
+- 필요한 Firebase 기능만 선택 (예: Firestore, Authentication 등)
+- 프로젝트 연결 시 `Use an existing project` 선택
+
+### 3. FlutterFire 연동
+```sh
+flutterfire configure
+```
+- 플랫폼 선택에서 android, ios 모두 체크(✔) 후 엔터
+- Android application id(패키지명) 질문이 나오면 `com.example.my_flutter_app_02` 입력
+- 기존 설정 재사용 여부는 n(no)로 답변하면 패키지명 입력 질문이 나옴
+- `firebase_options.dart` 덮어쓰기 질문이 나오면 y(yes)로 답변
+
+### 4. Android 패키지명 확인 및 AndroidManifest.xml 수정
+- 패키지명: `com.example.my_flutter_app_02`
+- `android/app/src/main/AndroidManifest.xml` 파일의 `<manifest>` 태그에 아래와 같이 추가:
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.my_flutter_app_02">
+```
+
+### 5. pubspec.yaml 의존성 충돌 해결
+- firebase_core, firebase_auth, google_sign_in 버전 호환성 주의
+- 최종 적용 예시:
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  firebase_core: ^3.14.0
+  firebase_auth: ^5.6.0
+  google_sign_in: ^6.2.1
+```
+- 버전 충돌 시 pub.dev에서 실제 존재하는 최신 버전만 사용해야 함
+- `flutter pub get`으로 의존성 설치
+
+### 6. Gradle/플러그인 오류 해결
+- settings.gradle.kts에서 아래 플러그인 선언 주석 처리:
+```kotlin
+// id("dev.flutter.flutter-plugin-loader") version "1.0.0"
+```
+- Gradle/Flutter 클린 빌드:
+```sh
+cd android
+./gradlew clean
+cd ..
+flutter clean
+flutter pub get
+flutter build apk
+```
+
+### 7. 구글 로그인 테스트용 인증 서비스 및 로그인 페이지 생성
+- lib/auth_service.dart: 구글 로그인/로그아웃/현재 사용자 반환 AuthService 클래스 구현
+- lib/login_page.dart: 구글 로그인 버튼, 로그인/로그아웃 상태 표시, AuthService 연동 UI 구현
+- main.dart에서 home: LoginPage()로 설정 시 바로 테스트 가능
+
+### 8. 기타 참고 사항
+- pubspec.yaml, Gradle, AndroidManifest.xml 등 주요 설정 파일은 항상 버전/경로/문법을 꼼꼼히 점검
+- 빌드/의존성 오류 발생 시, 에러 메시지와 pub.dev 공식 문서 참고
+- iOS/Android 환경별 인증서, 캐시, 빌드 문제는 README 상단의 문제 해결법 참고
+
+---
+
+> 위 작업 내역을 참고하여, 추후 동일한 환경 세팅 및 문제 해결에 활용할 것!
+
